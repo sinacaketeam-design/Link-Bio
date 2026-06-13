@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sina Cake | Link in Bio</title>
+    
+    <!-- Memuat Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Memuat Font Quicksand agar tulisan terlihat bulat dan lucu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Memuat FontAwesome untuk ikon-ikon (lokasi, WA, IG, Share) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #ffffff;
+            /* Polkadot Pattern Pink dengan opacity 15% */
+            background-image: 
+                radial-gradient(rgba(255, 105, 180, 0.15) 15%, transparent 15%),
+                radial-gradient(rgba(255, 105, 180, 0.15) 15%, transparent 15%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        /* Container utama ala HP */
+        .mobile-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.85); /* Semi transparan agar polkadot tembus sedikit */
+            backdrop-filter: blur(2px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.08);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animasi Mengambang untuk Header */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Style khusus tombol agar terlihat membal/3D */
+        .btn-bouncy {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-bouncy:active {
+            transform: scale(0.96) translateY(4px);
+            box-shadow: 0 0px 0 transparent !important;
+        }
+
+        /* Animasi Pop-in untuk Modal/Pop-up */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .modal-animate {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+</head>
+<body class="text-gray-700 antialiased selection:bg-pink-300 selection:text-white">
+
+    <div class="mobile-container pb-10">
+        
+        <!-- Bagian Atas: Tombol Share -->
+        <div class="flex justify-end p-4 sticky top-0 z-10">
+            <button onclick="shareWebsite()" class="w-10 h-10 bg-pink-500 text-white rounded-full flex items-center justify-center shadow-[0_4px_0_#d81b60] btn-bouncy hover:-translate-y-1" title="Bagikan Web">
+                <i class="fa-solid fa-share-nodes text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Header Profil -->
+        <div class="px-6 mb-8 animate-float flex flex-col items-center text-center">
+            <!-- Ikon/Logo Kue -->
+            <div class="w-24 h-24 bg-pink-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg mb-4">
+                <span class="text-5xl">🍰</span>
+            </div>
+            
+            <h1 class="text-2xl font-bold text-pink-500 mb-1">Sina Cake</h1>
+            <p class="text-pink-400 font-bold mb-3">@sinacake.katalog</p>
+            
+            <div class="bg-white border-2 border-pink-100 rounded-2xl p-4 shadow-sm text-sm font-medium leading-relaxed max-w-[90%]">
+                Kue Ulang Tahun Jakarta Bekasi<br>
+                Makanan & Minuman Cake Spesialist 🍰<br>
+                <div class="mt-2 text-xs flex flex-wrap justify-center gap-2">
+                    <span class="bg-pink-50 text-pink-600 px-2 py-1 rounded-md"><i class="fa-solid fa-clock"></i> Buka setiap hari</span>
+                    <span class="bg-pink-50 text-pink-600 px-2 py-1 rounded-md"><i class="fa-solid fa-location-dot"></i> JAKARTA, BEKASI</span>
+                    <span class="bg-pink-50 text-pink-600 px-2 py-1 rounded-md">🙏🏻 HALAL</span>
+                </div>
+                <div class="mt-2 text-xs font-bold text-gray-500">More Info WA 👇</div>
+            </div>
+        </div>
+
+        <!-- Container Tombol Links -->
+        <div class="px-5 flex flex-col gap-3">
+            
+            <!-- 1. Custom Cake -->
+            <button onclick="openModal('branchModal', 'custom')" class="btn-bouncy w-full bg-pink-500 text-white border-2 border-pink-500 shadow-[0_5px_0_#d81b60] py-3.5 px-4 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:-translate-y-1">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> ORDER KUE CUSTOM? KLIK DISINI
+            </button>
+
+            <!-- 2. Ready Cake -->
+            <button onclick="openModal('branchModal', 'ready')" class="btn-bouncy w-full bg-pink-400 text-white border-2 border-pink-400 shadow-[0_5px_0_#c2185b] py-3.5 px-4 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:-translate-y-1">
+                <i class="fa-solid fa-cake-candles"></i> ORDER KUE READY? KLIK DISINI
+            </button>
+
+            <!-- 3. Contoh Kue (Drive) -->
+            <a href="https://drive.google.com/drive/folders/1uhUuLrEPrOfSXEmbCaLWEhqaW6GjWgfx?usp=sharing" target="_blank" class="btn-bouncy w-full bg-white text-pink-600 border-2 border-pink-200 shadow-[0_5px_0_#fbcfe8] py-3.5 px-4 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:-translate-y-1">
+                <i class="fa-solid fa-images"></i> CONTOH KUE
+            </a>
+
+            <!-- 4. FAQ -->
+            <button onclick="openModal('faqModal')" class="btn-bouncy w-full bg-white text-pink-600 border-2 border-pink-200 shadow-[0_5px_0_#fbcfe8] py-3.5 px-4 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:-translate-y-1">
+                <i class="fa-solid fa-circle-question"></i> FAQ SINACAKE
+            </button>
+
+            <div class="w-full h-px bg-pink-200 my-2 relative flex justify-center items-center">
+                <span class="bg-[#fcf8fa] px-3 text-xs font-bold text-pink-400 tracking-wider uppercase">Lokasi Kami</span>
+            </div>
+
+            <!-- 5. Cabang Krendang -->
+            <a href="https://maps.app.goo.gl/EcXvQB8Ya7r59FPu8" target="_blank" class="btn-bouncy w-full bg-white text-gray-600 border-2 border-gray-100 shadow-[0_4px_0_#f3f4f6] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-start gap-3 hover:-translate-y-1">
+                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                <span class="text-left leading-tight">Sina Cake Krendang - Jakarta Barat</span>
+            </a>
+
+            <!-- 6. Cabang Jembatan Besi -->
+            <a href="https://maps.app.goo.gl/k28NYvMjTn6oip5o6" target="_blank" class="btn-bouncy w-full bg-white text-gray-600 border-2 border-gray-100 shadow-[0_4px_0_#f3f4f6] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-start gap-3 hover:-translate-y-1">
+                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                <span class="text-left leading-tight">Sina Cake Express Jembatan Besi - Jakarta Barat</span>
+            </a>
+
+            <!-- 7. Cabang Jelambar -->
+            <a href="https://maps.app.goo.gl/CLqK3x2TsBgaS5UL9" target="_blank" class="btn-bouncy w-full bg-white text-gray-600 border-2 border-gray-100 shadow-[0_4px_0_#f3f4f6] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-start gap-3 hover:-translate-y-1">
+                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                <span class="text-left leading-tight">Sina Cake Jelambar - Jakarta Barat</span>
+            </a>
+
+            <!-- 8. Cabang Tanah Pasir -->
+            <a href="https://maps.app.goo.gl/QBiadGLgyNxrJepN9" target="_blank" class="btn-bouncy w-full bg-white text-gray-600 border-2 border-gray-100 shadow-[0_4px_0_#f3f4f6] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-start gap-3 hover:-translate-y-1">
+                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                <span class="text-left leading-tight">Sina Cake Tanah Pasir - Jakarta Utara</span>
+            </a>
+
+            <!-- 9. Cabang Pademangan -->
+            <a href="https://maps.app.goo.gl/hd9Brj2L5MDBYrZ86" target="_blank" class="btn-bouncy w-full bg-white text-gray-600 border-2 border-gray-100 shadow-[0_4px_0_#f3f4f6] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-start gap-3 hover:-translate-y-1">
+                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                <span class="text-left leading-tight">Sina Cake Pademangan - Jakarta Utara</span>
+            </a>
+
+            <!-- 10. Cabang Bekasi -->
+            <a href="https://maps.app.goo.gl/3UM4eKeTamB9zsTM9" target="_blank" class="btn-bouncy w-full bg-white text-gray-600 border-2 border-gray-100 shadow-[0_4px_0_#f3f4f6] py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-start gap-3 hover:-translate-y-1">
+                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                <span class="text-left leading-tight">Sina Cake Perumnas - Bekasi</span>
+            </a>
+
+        </div>
+
+        <!-- Sosial Media Bawah -->
+        <div class="mt-10 flex justify-center gap-6">
+            <a href="https://instagram.com/sinacake" target="_blank" class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-pink-500 text-3xl shadow-[0_4px_0_#f3f4f6] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <button onclick="openModal('branchModal', 'tanya')" class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-green-500 text-3xl shadow-[0_4px_0_#f3f4f6] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- MODAL WA CABANG -->
+    <div id="branchModal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 bg-black/40 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-[360px] rounded-3xl p-5 relative shadow-2xl modal-animate border-4 border-pink-100">
+            <!-- Tombol Close -->
+            <button onclick="closeModal('branchModal')" class="absolute -top-3 -right-3 w-8 h-8 bg-gray-800 text-white rounded-full flex items-center justify-center font-bold shadow-lg hover:bg-gray-700">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-4">
+                <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <h3 class="font-bold text-lg text-gray-800">Pilih Cabang Terdekat</h3>
+                <p class="text-xs text-gray-500 mt-1">Pilih cabang tujuan untuk melanjutkan obrolan via WhatsApp.</p>
+            </div>
+
+            <div class="flex flex-col gap-2 max-h-[50vh] overflow-y-auto pr-1 pb-1" id="branchListContainer">
+                <!-- Tombol cabang akan di-inject lewat Javascript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FAQ -->
+    <div id="faqModal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 bg-black/40 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-[400px] rounded-3xl p-6 relative shadow-2xl modal-animate border-4 border-pink-100 max-h-[85vh] overflow-y-auto">
+            <!-- Tombol Close -->
+            <button onclick="closeModal('faqModal')" class="absolute -top-3 -right-3 w-8 h-8 bg-gray-800 text-white rounded-full flex items-center justify-center font-bold shadow-lg hover:bg-gray-700">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+                <h3 class="font-bold text-xl text-gray-800">FAQ Sina Cake</h3>
+                <p class="text-xs text-gray-500 mt-1">Pertanyaan yang sering diajukan</p>
+            </div>
+            
+            <div class="flex flex-col gap-4 text-left">
+                <!-- Item FAQ 1 -->
+                <div class="border-b border-pink-100 pb-4">
+                    <div class="font-bold text-pink-500 text-sm mb-1">Q: Bagaimana jam operasional Sina Cake?</div>
+                    <div class="text-sm text-gray-600 leading-relaxed">A: Sina Cake beroperasi setiap hari mulai pukul 08.00 hingga 00.00 WIB. Khusus untuk Cabang Krendang, jam operasional berakhir pada pukul 22.00 WIB.</div>
+                </div>
+                <!-- Item FAQ 2 -->
+                <div class="border-b border-pink-100 pb-4">
+                    <div class="font-bold text-pink-500 text-sm mb-1">Q: Bagaimana cara memesan kue custom?</div>
+                    <div class="text-sm text-gray-600 leading-relaxed">A: Anda dapat menyiapkan gambar atau foto referensi kue yang diinginkan, kemudian kirimkan ke admin WhatsApp cabang terdekat kami untuk proses konfirmasi detail dan harga.</div>
+                </div>
+                <!-- Item FAQ 3 -->
+                <div class="border-b border-pink-100 pb-4">
+                    <div class="font-bold text-pink-500 text-sm mb-1">Q: Kapan waktu terbaik untuk memesan kue custom?</div>
+                    <div class="text-sm text-gray-600 leading-relaxed">A: Untuk memastikan ketersediaan slot dan hasil yang maksimal, kami menyarankan Anda untuk melakukan pemesanan minimal H-2 atau H-3 sebelum hari pengiriman.</div>
+                </div>
+                <!-- Item FAQ 4 -->
+                <div class="border-b border-pink-100 pb-4">
+                    <div class="font-bold text-pink-500 text-sm mb-1">Q: Apakah tersedia layanan pengiriman ke rumah?</div>
+                    <div class="text-sm text-gray-600 leading-relaxed">A: Tentu. Untuk menjaga kualitas dan bentuk kue tetap aman selama perjalanan, kami sangat menyarankan penggunaan layanan kurir instan mobil (seperti GrabCar/GoCar).</div>
+                </div>
+                <!-- Item FAQ 5 -->
+                <div>
+                    <div class="font-bold text-pink-500 text-sm mb-1">Q: Berapa lama ketahanan kue Sina Cake?</div>
+                    <div class="text-sm text-gray-600 leading-relaxed">A: Kue kami dapat bertahan selama kurang lebih 24 jam di suhu ruang. Untuk penyimpanan yang lebih lama, Anda dapat menyimpannya di dalam lemari pendingin (kulkas) agar bertahan hingga 3-4 hari.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Kontak Cabang
+        const branches = [
+            { name: 'Cabang Krendang', phone: '62811870139' },
+            { name: 'Cabang Jelambar', phone: '62819858385' },
+            { name: 'Cabang Tanah Pasir', phone: '6281905128424' },
+            { name: 'Cabang Pademangan', phone: '6281905128446' },
+            { name: 'Cabang Jembatan Besi', phone: '628176886777' },
+            { name: 'Cabang Bekasi', phone: '6281196991117' }
+        ];
+
+        let currentOrderType = '';
+
+        // Render Tombol Cabang
+        function renderBranchButtons() {
+            const container = document.getElementById('branchListContainer');
+            container.innerHTML = '';
+            
+            branches.forEach(branch => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full bg-pink-50 hover:bg-pink-500 text-pink-600 hover:text-white font-bold py-3 px-4 rounded-xl text-sm transition-colors text-left flex justify-between items-center border border-pink-100';
+                btn.innerHTML = `<span>📍 ${branch.name}</span> <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>`;
+                btn.onclick = () => sendToWhatsApp(branch.phone, branch.name);
+                container.appendChild(btn);
+            });
+        }
+        
+        // Panggil render saat awal load
+        renderBranchButtons();
+
+        // Buka Pop-up (Modal)
+        function openModal(modalId, orderType = '') {
+            if (modalId === 'branchModal') {
+                currentOrderType = orderType;
+            }
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Tutup Pop-up (Modal)
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Redirect ke WhatsApp dengan Pesan Otomatis
+        function sendToWhatsApp(phone, branchName) {
+            let message = '';
+            if (currentOrderType === 'custom') {
+                message = `Halo Admin Sina Cake ${branchName}, saya ingin bertanya mengenai pemesanan Custom Cake.`;
+            } else if (currentOrderType === 'ready') {
+                message = `Halo Admin Sina Cake ${branchName}, saya ingin menanyakan ketersediaan varian Ready Cake hari ini.`;
+            } else {
+                message = `Halo Admin Sina Cake ${branchName}, saya ingin bertanya informasi lebih lanjut.`;
+            }
+
+            const encodedMessage = encodeURIComponent(message);
+            const waLink = `https://wa.me/${phone}?text=${encodedMessage}`;
+            
+            // Buka tab WA
+            window.open(waLink, '_blank');
+            closeModal('branchModal');
+        }
+
+        // Fitur Bagikan Website
+        function shareWebsite() {
+            const shareData = {
+                title: 'Sina Cake | Link in Bio',
+                text: 'Kue Ulang Tahun Jakarta Bekasi. Makanan & Minuman Cake Spesialist! 🍰',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('Sukses membagikan web'))
+                    .catch((err) => console.log('Gagal membagikan:', err));
+            } else {
+                // Fallback untuk browser PC lama (Copy URL)
+                const dummy = document.createElement('input');
+                document.body.appendChild(dummy);
+                dummy.value = window.location.href;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                
+                // Pesan Pop-up
+                const popup = document.createElement('div');
+                popup.innerText = "Link berhasil disalin ke clipboard!";
+                popup.className = "fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg text-sm z-50 modal-animate";
+                document.body.appendChild(popup);
+                
+                setTimeout(() => { popup.remove(); }, 3000);
+            }
+        }
+
+        // Tutup Modal jika area gelap di luar modal di-klik
+        window.onclick = function(event) {
+            const branchModal = document.getElementById('branchModal');
+            const faqModal = document.getElementById('faqModal');
+            
+            if (event.target === branchModal) {
+                closeModal('branchModal');
+            }
+            if (event.target === faqModal) {
+                closeModal('faqModal');
+            }
+        }
+    </script>
+</body>
+</html>
